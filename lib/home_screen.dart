@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.helloWorld),
+        centerTitle: true,
       ),
       body: Column(
         children: [
