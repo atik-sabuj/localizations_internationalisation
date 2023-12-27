@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'controller/language_change_controller.dart';
 import 'package:provider/provider.dart';
 import 'home_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences sp = await SharedPreferences.getInstance();
+  final String languageCode = sp.getString('language_code') ?? '' ;
+  runApp(MyApp(locale: languageCode,));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String locale;
+  const MyApp({super.key, required this.locale});
 
   // This widget is the root of your application.
   @override
@@ -22,13 +27,19 @@ class MyApp extends StatelessWidget {
 
       child: Consumer<LanguageChangeController>(
         builder: (context, provider, child){
+
+          if(locale.isEmpty) {
+            provider.changeLanguage(Locale('en'));
+          }
+
           return MaterialApp(
             title: 'Flutter Demo',
 
-            //Localization add:
-
-            locale: Locale('en'),        //For English Language
-            //locale: Locale('es'),      //For Espain Language
+            locale: locale == '' ?
+            Locale('en') :
+            provider.appLocale == null ?
+            Locale('en') :
+            provider.appLocale,
 
             localizationsDelegates: [
               AppLocalizations.delegate,

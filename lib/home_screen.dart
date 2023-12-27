@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.helloWorld),
         centerTitle: true,
+
         actions: [
           Consumer<LanguageChangeController>(
               builder: (context, provider, child) {
@@ -28,10 +29,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     onSelected: (Language item){
                       if(Language.english.name == item.name) {
                         provider.changeLanguage(Locale('en'));
+                        print('English');
                       }else {
                         provider.changeLanguage(Locale('es'));
+                        print('Spanish');
                       }
                     },
+
                     itemBuilder: (BuildContext context) => <PopupMenuEntry<Language>>[
                       const PopupMenuItem(
                           value: Language.english,
@@ -48,10 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: Column(
-        children: [
 
-        ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            Text(AppLocalizations.of(context)!.name),
+          ],
+        ),
       ),
     );
   }
