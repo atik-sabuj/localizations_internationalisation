@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Localizations & Internationalisation'),
+        title: Text(AppLocalizations.of(context)!.helloWorld),
       ),
       body: Column(
         children: [
@@ -22,3 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
+
