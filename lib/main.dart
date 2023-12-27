@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'controller/language_change_controller.dart';
+import 'package:provider/provider.dart';
 import 'home_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,32 +15,42 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_)=> LanguageChangeController()),
+        ],
 
-      //Localization add:
+      child: Consumer<LanguageChangeController>(
+        builder: (context, provider, child){
+          return MaterialApp(
+            title: 'Flutter Demo',
 
-      locale: Locale('en'),
-      //locale: Locale('es'),
+            //Localization add:
 
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+            locale: Locale('en'),        //For English Language
+            //locale: Locale('es'),      //For Espain Language
 
-      supportedLocales: [
-        Locale('en'),
-        Locale('es'),
-      ],
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
 
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+            supportedLocales: [
+              Locale('en'),
+              Locale('es'),
+            ],
+
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+            debugShowCheckedModeBanner: false,
+            home: HomeScreen(),
+          );
+        },
+      )
     );
   }
 }
